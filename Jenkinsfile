@@ -33,4 +33,5 @@ pipeline {
                         Check console output at: ${env.BUILD_URL}""",
                 to: 'retrodante3@gmail.com'
             )
+        }
 }
