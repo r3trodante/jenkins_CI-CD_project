@@ -1,25 +1,22 @@
 pipeline {
     agent any
+    
+    tools {
+        // Replace 'Maven3' with the EXACT name you gave Maven 
+        // in Manage Jenkins -> Tools -> Maven installations
+        maven 'MAVEN_HOME' 
+    }
 
     stages {
-        stage('Checkout') {
-            steps {
-                // This pulls your code from the GitHub repo linked to the job
-                checkout scm
-            }
-        }
-
         stage('Compile') {
             steps {
-                // Compiles the code using Maven
-                // Use 'sh' for Linux/macOS or 'bat' for Windows Jenkins agents
+                // 'bat' is correct for your Windows environment
                 bat 'mvn clean compile'
             }
         }
 
         stage('Run Application') {
             steps {
-                // Executes the main method in App.java
                 bat 'mvn exec:java'
             }
         }
@@ -30,7 +27,7 @@ pipeline {
             echo 'Build and Execution successful!'
         }
         failure {
-            echo 'Build failed. Please check the console output for errors.'
+            echo 'Build failed. Checking "Tools" configuration might help.'
         }
     }
 }
