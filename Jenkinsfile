@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        label 'nodegroup1'
+    }
     
     tools {
         maven 'Maven3' // Ensure this matches your Tool name
