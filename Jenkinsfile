@@ -15,6 +15,12 @@ pipeline {
                 sh 'mvn clean package' 
             }
         }
+        
+        stage('Test Failure') {
+            steps {
+                error "This is a forced failure to test my email!"
+            }
+        }
 
         stage('Archive Artifacts') {
             steps {
