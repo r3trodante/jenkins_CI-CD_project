@@ -2,32 +2,38 @@ pipeline {
     agent any
     
     tools {
-        // Replace 'Maven3' with the EXACT name you gave Maven 
-        // in Manage Jenkins -> Tools -> Maven installations
-        maven 'MAVEN_HOME' 
+        maven 'Maven3' // Ensure this matches your Tool name
     }
 
     stages {
-        stage('Compile') {
+        stage('Checkout') {
             steps {
-                // 'bat' is correct for your Windows environment
-                bat 'mvn clean compile'
+                checkout scm
             }
         }
 
-        stage('Run Application') {
+        stage('Build & Package') {
             steps {
-                bat 'mvn exec:java'
+                // Creates the executable .jar file in the target folder
+                bat 'mvn clean package'
+            }
+        }
+
+        stage('Archive Artifacts') {
+            steps {
+                // Saves the .jar file so it appears on the Jenkins project page
+                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
             }
         }
     }
 
     post {
         success {
-            echo 'Build and Execution successful!'
+            echo 'SUCCESS: Build packaged and archived.'
+            // Optional: Slack/Email notification would go here
         }
         failure {
-            echo 'Build failed. Checking "Tools" configuration might help.'
+            echo 'FAILURE: Check Maven logs.'
         }
     }
 }
