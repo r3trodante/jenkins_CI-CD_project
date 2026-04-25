@@ -16,12 +16,6 @@ pipeline {
             }
         }
         
-        stage('Test Failure') {
-            steps {
-                error "This is a forced failure to test my email!"
-            }
-        }
-
         stage('Archive Artifacts') {
             steps {
                 archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
