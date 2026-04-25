@@ -34,4 +34,5 @@ pipeline {
                 to: 'retrodante3@gmail.com'
             )
         }
+    }
 }
